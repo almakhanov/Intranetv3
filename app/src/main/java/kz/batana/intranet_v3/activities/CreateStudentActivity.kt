@@ -12,7 +12,7 @@ import android.widget.Toast
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_create_student.*
+import kotlinx.android.synthetic.main.activity_create_student.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.classes.Student
 import kz.batana.intranet_v3.database.StudentEntity

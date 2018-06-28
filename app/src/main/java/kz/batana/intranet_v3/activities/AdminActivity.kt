@@ -14,9 +14,8 @@ import kz.batana.intranet_v3.activities.LoginActivity.Companion.adminList
 import kz.batana.intranet_v3.activities.LoginActivity.Companion.studentList
 import kz.batana.intranet_v3.activities.LoginActivity.Companion.teacherList
 import kz.batana.intranet_v3.activities.SplashActivity.Companion.asd
-import kz.batana.intranet_v3.fragments.CreateStudentFragment
 
-class AdminActivity : AppCompatActivity(), CreateStudentFragment.CreateStudenFragmentListener {
+class AdminActivity : AppCompatActivity() {
 
     companion object {
         var facultyList = arrayOf("Select your Faculty","Faculty of Information Technology", "International School of Management",
@@ -28,7 +27,6 @@ class AdminActivity : AppCompatActivity(), CreateStudentFragment.CreateStudenFra
     }
 
 
-    private lateinit var createStudnetFragment: CreateStudentFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

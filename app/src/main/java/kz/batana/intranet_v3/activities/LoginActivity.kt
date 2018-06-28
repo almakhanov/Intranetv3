@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d(asd, "${password.hashCode()} == ${a.password}")
                         if(a.username.equals(username) and a.password.equals(password.hashCode())){
                             Log.d(asd, "LOGINED Admin!")
-                            var adminIntent = Intent(this, AdminActivity::class.java)
+                            var adminIntent = Intent(this, AdminNewActivity::class.java)
                             adminIntent.putExtra("user", username)
                             startActivity(adminIntent)
                             finish()
