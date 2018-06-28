@@ -9,18 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SplashActivity">
+        <activity android:name="kz.batana.intranet_v3.ui.login.LoginActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AdminActivity" />
-        <activity android:name=".activities.CreateStudentActivity" />
-        <activity android:name=".activities.CreateTeacherActivity" />
-        <activity android:name=".activities.AdminNewActivity"></activity>
+        <activity android:name="kz.batana.intranet_v3.ui.admin.AdminActivity" />
+        <activity android:name=".ui.admin.student_create.CreateStudentActivity" />
+        <activity android:name=".ui.admin.teacher_create.CreateTeacherActivity" />
+        <activity android:name="kz.batana.intranet_v3.ui.admin.AdminNewActivity"></activity>
     </application>
 
 </manifest>

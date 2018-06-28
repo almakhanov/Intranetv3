@@ -1,4 +1,4 @@
-package kz.batana.intranet_v3.activities
+package kz.batana.intranet_v3.ui.admin.student_create
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -14,8 +14,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_student.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.classes.Student
-import kz.batana.intranet_v3.database.StudentEntity
+import kz.batana.intranet_v3.SplashActivity
+import kz.batana.intranet_v3.data.api.database.student_room.StudentEntity
+import kz.batana.intranet_v3.data.api.models.Student
+import kz.batana.intranet_v3.ui.admin.AdminActivity
+import kz.batana.intranet_v3.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -160,8 +163,8 @@ class CreateStudentActivity : AppCompatActivity() {
 
         Log.d(SplashActivity.asd, "Student : $s")
 
-        var ss = StudentEntity(s.id, s.username, s.firstname,s.lastname, s.password,
-                s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email,s.gender, s.faculty, s.specialization,
+        var ss = StudentEntity(s.id, s.username, s.firstname, s.lastname, s.password,
+                s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email, s.gender, s.faculty, s.specialization,
                 s.yearOfStudy)
 
 
