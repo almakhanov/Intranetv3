@@ -1,4 +1,4 @@
-package kz.batana.intranet_v3.adapters
+package kz.batana.intranet_v3.ui.admin
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.item_all_users_adapter_header.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_students.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_teachers.view.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.activities.SplashActivity.Companion.asd
-import kz.batana.intranet_v3.database.AdminEntity
-import kz.batana.intranet_v3.database.StudentEntity
-import kz.batana.intranet_v3.database.TeacherEntity
+import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.data.api.database.admin_room.AdminEntity
+import kz.batana.intranet_v3.data.api.database.student_room.StudentEntity
+import kz.batana.intranet_v3.data.api.database.teacher_room.TeacherEntity
 
 class AllUsersAdapter(private val dataset: ArrayList<Any>,
                       private val listener: OnItemClickListener)
@@ -62,7 +62,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is StudentListViewHolder->{
+            is StudentListViewHolder ->{
                 val obj = dataset[position] as StudentEntity
                 Log.d(asd, "==> $obj")
                 holder.itemView.studentFirstNameCardViewTextView.text = obj.firstname
@@ -71,7 +71,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
                     listener.onStudentClicked(obj)
                 }
             }
-            is TeacherListViewHolder->{
+            is TeacherListViewHolder ->{
                 val obj = dataset[position] as TeacherEntity
                 Log.d(asd, "==> $obj")
                 holder.itemView.teacherFirstNameCardViewTextView.text = obj.firstname
@@ -80,7 +80,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
                     listener.onTeacherClicked(obj)
                 }
             }
-            is AdminListViewHolder->{
+            is AdminListViewHolder ->{
                 val obj = dataset[position] as AdminEntity
                 Log.d(asd, "==> $obj")
                 holder.itemView.adminFirstNameCardViewTextView.text = obj.firstname
@@ -89,7 +89,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
                     listener.onAdminClicked(obj)
                 }
             }
-            is HeaderViewHolder->{
+            is HeaderViewHolder ->{
                 val obj = dataset[position] as String
                 Log.d(asd, "==> $obj")
                 holder.itemView.headerCardViewTextView.text = obj
