@@ -1,4 +1,4 @@
-package kz.batana.intranet_v3.data.api.database.student_room
+package kz.batana.intranet_v3.data.localDB.database.student_room
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert

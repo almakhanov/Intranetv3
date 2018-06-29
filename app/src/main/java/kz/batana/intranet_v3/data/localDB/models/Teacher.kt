@@ -1,4 +1,4 @@
-package kz.batana.intranet_v3.data.api.models
+package kz.batana.intranet_v3.data.localDB.models
 
 
 class Teacher(degree_: String, firstname_: String, lastname_: String, dateOfBirth_: String, telNumber_: String, email_: String,

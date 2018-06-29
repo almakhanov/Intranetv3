@@ -1,4 +1,4 @@
-package kz.batana.intranet_v3.data.api.models
+package kz.batana.intranet_v3.data.localDB.models
 
 import java.util.*
 

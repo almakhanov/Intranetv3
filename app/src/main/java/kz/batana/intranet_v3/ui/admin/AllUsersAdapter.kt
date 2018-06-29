@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.item_all_users_adapter_students.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_teachers.view.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.SplashActivity.Companion.asd
-import kz.batana.intranet_v3.data.api.database.admin_room.AdminEntity
-import kz.batana.intranet_v3.data.api.database.student_room.StudentEntity
-import kz.batana.intranet_v3.data.api.database.teacher_room.TeacherEntity
+import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
+import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
+import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class AllUsersAdapter(private val dataset: ArrayList<Any>,
                       private val listener: OnItemClickListener)

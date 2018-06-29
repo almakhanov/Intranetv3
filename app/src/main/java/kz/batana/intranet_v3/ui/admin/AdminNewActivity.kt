@@ -8,16 +8,15 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_admin_new.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.SplashActivity.Companion.asd
-import kz.batana.intranet_v3.data.api.database.admin_room.AdminEntity
-import kz.batana.intranet_v3.data.api.database.student_room.StudentEntity
-import kz.batana.intranet_v3.data.api.database.teacher_room.TeacherEntity
-import kz.batana.intranet_v3.ui.login.LoginActivity.Companion.adminList
-import kz.batana.intranet_v3.ui.login.LoginActivity.Companion.studentList
-import kz.batana.intranet_v3.ui.login.LoginActivity.Companion.teacherList
+import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
+import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
+import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
-class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListener {
+class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListener, AdminMVP.View {
 
-    private lateinit var arrayList : ArrayList<Any>
+    private val presenter : AdminPresenter by lazy{ AdminPresenter(this) }
+    private var arrayList = ArrayList<Any>()
+
 
     override fun onHeaderClicked(h: String) {
         Log.d(asd, h)
@@ -39,24 +38,13 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_new)
 
-        recyclerShow()
+        presenter.getObjects()
     }
 
-    private fun recyclerShow(){
-        arrayList = ArrayList()
-        arrayList.add("Students")
-        for(it in studentList){
-            arrayList.add(it)
-        }
 
-        arrayList.add("Teachers")
-        for(it in teacherList){
-            arrayList.add(it)
-        }
-        arrayList.add("Admins")
-        for(it in adminList){
-            arrayList.add(it)
-        }
+    override fun updateList(objects: ArrayList<Any>) {
+
+        for (it in objects) arrayList.add(it)
 
         var layout = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         RecView?.layoutManager = layout
@@ -64,9 +52,7 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         RecView?.adapter = adapter
         adapter.notifyDataSetChanged()
 
-
         Log.d(asd, "arr list size = ${arrayList.size}")
-
     }
 
 }

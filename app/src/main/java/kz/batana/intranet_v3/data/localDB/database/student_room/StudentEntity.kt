@@ -1,8 +1,9 @@
-package kz.batana.intranet_v3.data.api.database.student_room
+package kz.batana.intranet_v3.data.localDB.database.student_room
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "student")
 data class StudentEntity(
@@ -46,4 +47,4 @@ data class StudentEntity(
 
         @ColumnInfo(name = "yearOfStudy")
         var yearOfStudy: Int
-)
+) : Serializable

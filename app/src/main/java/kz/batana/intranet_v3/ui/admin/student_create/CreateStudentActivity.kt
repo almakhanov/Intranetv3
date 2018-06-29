@@ -9,26 +9,26 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_student.*
 import kz.batana.intranet_v3.R
+import kz.batana.intranet_v3.R.id.*
 import kz.batana.intranet_v3.SplashActivity
-import kz.batana.intranet_v3.data.api.database.student_room.StudentEntity
-import kz.batana.intranet_v3.data.api.models.Student
-import kz.batana.intranet_v3.ui.admin.AdminActivity
-import kz.batana.intranet_v3.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreateStudentActivity : AppCompatActivity() {
+class CreateStudentActivity : AppCompatActivity(), CreateStudentMVP.View {
+
+    private val presenter : CreateStudentPresenter by lazy{ CreateStudentPresenter(this) }
 
     private var calendar = Calendar.getInstance()
     private var dateSetListener : DatePickerDialog.OnDateSetListener? = null
     private var spinnerFac : Spinner? = null
     private var spinnerSpec : Spinner? = null
     private var spinnerYearOfStudy : Spinner? = null
+
+    private lateinit var specList: ArrayList<String>
+    private lateinit var facList: ArrayList<String>
+    private lateinit var yearList: ArrayList<String>
 
     //Student
     private var yearOfStudyS : Int = 0
@@ -46,11 +46,17 @@ class CreateStudentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_student)
+
+        specList = presenter.getSpecList()
+        facList = presenter.getFacList()
+        yearList = presenter.getYearList()
     }
 
     override fun onResume() {
         super.onResume()
+
         birthDayBtn()
+
         studentBirthdayInput.setOnClickListener{
             DatePickerDialog(this, dateSetListener,
                     calendar.get(Calendar.YEAR),
@@ -62,9 +68,11 @@ class CreateStudentActivity : AppCompatActivity() {
 
 
         saveStudentBtn.setOnClickListener{
-            if(validated()){
+            if(presenter.validated(studentLastNameInput.text.toString(), studentNameInput.text.toString(),
+                            studentTelInput.text.toString(), studentEmailInput.text.toString(), studentBirthdayInput.text.toString())){
                 getTextViews()
-                saveStudent()
+                presenter.saveStudent(yearOfStudyS, facultyS, specS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
+                        genderS,pasS.hashCode(),dateOfRegisS)
                 clearStudentForm()
             }
         }
@@ -74,7 +82,7 @@ class CreateStudentActivity : AppCompatActivity() {
     private fun spinnerFun(){
         //Faculty spinner
         spinnerFac = this.studentFacultyInput
-        spinnerFac?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, AdminActivity.facultyList)
+        spinnerFac?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, facList)
         spinnerFac?.prompt = "Select your Faculty"
         spinnerFac?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
@@ -86,14 +94,14 @@ class CreateStudentActivity : AppCompatActivity() {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "FacOption: ${AdminActivity.facultyList[p2]}")
-                facultyS = AdminActivity.facultyList[p2]
+                Log.d(SplashActivity.asd, "FacOption: ${facList[p2]}")
+                facultyS = facList[p2]
             }
         }
 
         //Specialization spinner
         spinnerSpec = this.studentSpecInput
-        spinnerSpec?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, AdminActivity.specList)
+        spinnerSpec?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, specList)
         spinnerSpec?.prompt = "Select your Specialization"
         spinnerSpec?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -104,14 +112,14 @@ class CreateStudentActivity : AppCompatActivity() {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "SpecOption: ${AdminActivity.specList[p2]}")
-                specS = AdminActivity.specList[p2]
+                Log.d(SplashActivity.asd, "SpecOption: ${specList[p2]}")
+                specS = specList[p2]
             }
         }
 
         //YearOfStudy spinner
         spinnerYearOfStudy = this.studentYearOfStudyInput
-        spinnerYearOfStudy?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, AdminActivity.yearOfStudyList)
+        spinnerYearOfStudy?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, yearList)
         spinnerYearOfStudy?.prompt = "Select your Year Of Study"
         spinnerYearOfStudy?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -122,7 +130,7 @@ class CreateStudentActivity : AppCompatActivity() {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "YearOfStudyOption: ${AdminActivity.yearOfStudyList[p2]}")
+                Log.d(SplashActivity.asd, "YearOfStudyOption: ${yearList[p2]}")
                 yearOfStudyS = p2
             }
         }
@@ -135,7 +143,7 @@ class CreateStudentActivity : AppCompatActivity() {
             calendar.set(Calendar.MONTH, monthOfYear)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            val birthFormat = "yyyy_MM_dd"
+            val birthFormat = "yyyy-MM-dd"
             val simpleDateFormat = SimpleDateFormat(birthFormat, Locale.US)
             studentBirthdayInput.text = simpleDateFormat.format(calendar.time)
 
@@ -144,7 +152,7 @@ class CreateStudentActivity : AppCompatActivity() {
 
             //DATE OF REGISTRATION BY DATE FORMAT
             var dd = Date()
-            var sdf = SimpleDateFormat("yyyy_MM_dd")
+            var sdf = SimpleDateFormat("yyyy-MM-dd")
             dateOfRegisS = sdf.format(dd)
         }
     }
@@ -157,25 +165,6 @@ class CreateStudentActivity : AppCompatActivity() {
         genderS = if(studentGenderMale.isChecked) "Male" else "Female"
     }
 
-    private fun saveStudent() {
-        var s = Student(yearOfStudyS, facultyS, specS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
-                genderS,pasS.hashCode(),dateOfRegisS)
-
-        Log.d(SplashActivity.asd, "Student : $s")
-
-        var ss = StudentEntity(s.id, s.username, s.firstname, s.lastname, s.password,
-                s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email, s.gender, s.faculty, s.specialization,
-                s.yearOfStudy)
-
-
-        Single.fromCallable {
-            LoginActivity.studentDB?.studentDao()?.insertStudent(ss)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
-
-        Toast.makeText(this, "Saved Successfully!", Toast.LENGTH_SHORT).show()
-        Log.d(SplashActivity.asd, "Student created!")
-    }
 
     private fun clearStudentForm(){
         studentLastNameInput.text = null
@@ -185,8 +174,7 @@ class CreateStudentActivity : AppCompatActivity() {
         studentTelInput.text = null
     }
 
-
-    private fun validated(): Boolean{
-        return !(studentLastNameInput.equals(null) || studentNameInput.equals(null))
+    override fun msg(s: String) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 }

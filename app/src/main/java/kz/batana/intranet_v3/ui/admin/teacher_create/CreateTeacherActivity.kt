@@ -9,26 +9,23 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_teacher.*
 import kz.batana.intranet_v3.R
+import kz.batana.intranet_v3.R.id.*
 import kz.batana.intranet_v3.SplashActivity
-import kz.batana.intranet_v3.data.api.database.teacher_room.TeacherEntity
-import kz.batana.intranet_v3.data.api.models.Teacher
-import kz.batana.intranet_v3.ui.admin.AdminActivity
-import kz.batana.intranet_v3.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreateTeacherActivity : AppCompatActivity() {
+class CreateTeacherActivity : AppCompatActivity(), CreateTeacherMVP.View {
+
+    private val presenter : CreateTeacherPresenter by lazy{ CreateTeacherPresenter(this) }
 
     private var calendar = Calendar.getInstance()
     private var dateSetListener : DatePickerDialog.OnDateSetListener? = null
-    private var spinnerFac : Spinner? = null
+
     private var spinnerSpec : Spinner? = null
-    private var spinnerYearOfStudy : Spinner? = null
+
+    private lateinit var degreeList : ArrayList<String>
 
     //Teacher
     private var dateOfBirthS : String = ""
@@ -45,6 +42,8 @@ class CreateTeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_teacher)
+
+        degreeList = presenter.getDegreeList()
     }
 
     override fun onResume() {
@@ -61,9 +60,11 @@ class CreateTeacherActivity : AppCompatActivity() {
 
 
         saveStudentBtn.setOnClickListener{
-            if(validated()){
+            if(presenter.validated(teacherNameInput.text.toString(), teacherLastNameInput.text.toString(),
+                            teacherTelInput.text.toString(), teacherEmailInput.text.toString(), teacherBirthdayInput.text.toString())){
                 getTextViews()
-                teacherStudent()
+                presenter.saveTeacher(degreeS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
+                        genderS,pasS.hashCode(),dateOfRegisS)
                 clearTeacherForm()
             }
         }
@@ -75,7 +76,7 @@ class CreateTeacherActivity : AppCompatActivity() {
 
         //Specialization spinner
         spinnerSpec = this.teacherDegreeInput
-        spinnerSpec?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, AdminActivity.degreeList)
+        spinnerSpec?.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, degreeList)
         spinnerSpec?.prompt = "Select Degree"
         spinnerSpec?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -86,8 +87,8 @@ class CreateTeacherActivity : AppCompatActivity() {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "SpecOption: ${AdminActivity.degreeList[p2]}")
-                degreeS = AdminActivity.degreeList[p2]
+                Log.d(SplashActivity.asd, "SpecOption: ${degreeList[p2]}")
+                degreeS = degreeList[p2]
             }
         }
 
@@ -123,25 +124,6 @@ class CreateTeacherActivity : AppCompatActivity() {
         genderS = if(teacherGenderMale.isChecked) "Male" else "Female"
     }
 
-    private fun teacherStudent() {
-        var s = Teacher(degreeS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
-                genderS,pasS.hashCode(),dateOfRegisS)
-
-        Log.d(SplashActivity.asd, "Student : $s")
-
-        var ss = TeacherEntity(s.id, s.username, s.firstname, s.lastname, s.password,
-                s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email, s.gender, s.degree)
-
-
-        Single.fromCallable {
-            LoginActivity.teacherDB?.teacherDao()?.insertTeacher(ss)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
-
-        Toast.makeText(this, "Saved Successfully!", Toast.LENGTH_SHORT).show()
-        Log.d(SplashActivity.asd, "Teacher created! $ss")
-    }
-
     private fun clearTeacherForm(){
         teacherLastNameInput.text = null
         teacherNameInput.text = null
@@ -151,8 +133,8 @@ class CreateTeacherActivity : AppCompatActivity() {
     }
 
 
-    private fun validated(): Boolean{
-        return !(teacherLastNameInput.equals(null) || teacherNameInput.equals(null))
+    override fun msg(s: String) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
 

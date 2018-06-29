@@ -1,13 +1,12 @@
-package kz.batana.intranet_v3.data.api.database.admin_room
+package kz.batana.intranet_v3.data.localDB.database.teacher_room
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
-
-
-@Entity(tableName = "admin")
-data class AdminEntity(
+@Entity(tableName = "teacher")
+data class TeacherEntity(
 
         @PrimaryKey
         @ColumnInfo(name = "id")
@@ -38,5 +37,10 @@ data class AdminEntity(
         var email: String?,
 
         @ColumnInfo(name = "gender")
-        var gender: String
-)
+        var gender: String,
+
+        @ColumnInfo(name = "degree")
+        var degree: String
+
+
+) : Serializable
