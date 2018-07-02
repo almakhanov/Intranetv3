@@ -3,6 +3,7 @@ package kz.batana.intranet_v3.ui.admin
 import android.widget.Button
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
+import kz.batana.intranet_v3.data.localDB.database.suggestions_room.SuggestionsEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class AdminPresenter(private val view : AdminMVP.View) : AdminMVP.Presenter {
@@ -61,6 +62,23 @@ class AdminPresenter(private val view : AdminMVP.View) : AdminMVP.Presenter {
         interactor.getAdminsList()
         interactor.getStudentsList()
         interactor.getTeachersList()
+    }
+
+    override fun saveSuggestion(query: String) {
+        var sg = SuggestionsEntity(query)
+        interactor.saveSuggestion(sg)
+    }
+
+    override fun getSuggestions() {
+        interactor.getSuggestions()
+    }
+
+    override fun suggestionsFound(sgs: List<SuggestionsEntity>) {
+        var arrList = ArrayList<String>()
+        sgs.forEach{
+            arrList.add(it.text)
+        }
+        view.reloadSuggestions(arrList)
     }
 
 

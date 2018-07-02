@@ -20,7 +20,7 @@ class AllUsersAdapter(private var dataset: ArrayList<Any>,
 
     private var usersQuery = UsersQueryFilter(dataset)
 
-    open fun filter(query: String){
+    fun filter(query: String){
         dataset = usersQuery.findByFilter(query)
         notifyDataSetChanged()
     }

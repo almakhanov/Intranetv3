@@ -10,9 +10,8 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AutoCompleteTextView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_admin_new.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.SplashActivity.Companion.TAG
@@ -115,8 +114,16 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         searchView?.queryHint = "Search"
         autoCompleteTextView = searchView?.findViewById(android.support.v7.appcompat.R.id.search_src_text) as AutoCompleteTextView
 
+        presenter.getSuggestions()
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                query.let {
+                    if (query!!.isNotEmpty()) {
+                        // saving the query for database when submit button is clicked
+                        presenter.saveSuggestion(query)
+                        presenter.getSuggestions()
+                    }
+                }
                 return true
             }
 
@@ -129,6 +136,19 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun reloadSuggestions(data:ArrayList<String>){
+        var suggestionsAdapter = ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, data.toTypedArray())
+        autoCompleteTextView?.setAdapter(suggestionsAdapter)
+        autoCompleteTextView?.threshold = 0
+        autoCompleteTextView?.onItemClickListener = object : AdapterView.OnItemClickListener{
+            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                adapter.filter(data[position])
+            }
+        }
     }
 
 

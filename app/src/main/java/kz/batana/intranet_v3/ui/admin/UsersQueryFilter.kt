@@ -5,6 +5,7 @@ import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class UsersQueryFilter(var items: ArrayList<Any>) {
+
     fun findByFilter(query: String) : ArrayList<Any>{
         var arrList = ArrayList<Any>()
         items.forEach{
