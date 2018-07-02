@@ -1,7 +1,7 @@
 package kz.batana.intranet_v3.ui.admin.student_create
 
 import android.util.Log
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.TAG
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.models.Student
 
@@ -42,7 +42,7 @@ class CreateStudentPresenter(private val view: CreateStudentMVP.View) : CreateSt
         var s = Student(yearOfStudyS, facultyS, specS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
                 genderS,password.hashCode(),dateOfRegisS)
 
-        Log.d(asd, "Student : $s")
+        Log.d(TAG, "Student : $s")
 
         var ss = StudentEntity(s.id, s.username, s.firstname, s.lastname, s.password,
                 s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email, s.gender, s.faculty, s.specialization,
@@ -52,7 +52,7 @@ class CreateStudentPresenter(private val view: CreateStudentMVP.View) : CreateSt
         interactor.saveStudentEntity(ss)
 
         view.msg("Saved Successfully!")
-        Log.d(asd, "Student created!")
+        Log.d(TAG, "Student created!")
     }
 
     override fun getSpecList(): ArrayList<String> {

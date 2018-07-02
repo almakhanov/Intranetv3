@@ -5,7 +5,7 @@ import android.content.Context
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.TAG
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminDB
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentDB
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherDB
@@ -22,7 +22,7 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->
-                    Log.d(asd, "LoginInteractor admin obj : $user")
+                    Log.d(TAG, "LoginInteractor admin obj : $user")
                     presenter.userFound(user)
                 }
 
@@ -30,7 +30,7 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->
-                    Log.d(asd, "LoginInteractor student obj : $user")
+                    Log.d(TAG, "LoginInteractor student obj : $user")
                     presenter.userFound(user)
                 }
 
@@ -38,7 +38,7 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->
-                    Log.d(asd, "LoginInteractor teacher obj : $user")
+                    Log.d(TAG, "LoginInteractor teacher obj : $user")
                     presenter.userFound(user)
                 }
     }
@@ -76,6 +76,6 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
 //
 //
 //
-//        Log.d(asd, "Admin created!")
+//        Log.d(TAG, "Admin created!")
 //    }
 }

@@ -11,9 +11,13 @@ import kz.batana.intranet_v3.ui.login.LoginActivity
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        var asd = "accepted"
+        var TAG = "accepted"
         lateinit var username : String
         lateinit var password : String
+
+        fun log(msg: String){
+            Log.d(TAG, msg)
+        }
     }
 
     private var SPLASH_TIME_OUT : Long = 1000
@@ -33,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
             password = "no_password"
         }
 
-        Log.d(asd, "SplashActivity is opened")
+        log("SplashActivity is opened")
         Handler().postDelayed({
             run {
                 val loginIntent = Intent(this, LoginActivity::class.java)

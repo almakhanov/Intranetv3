@@ -23,7 +23,7 @@ class AdminInteractor(private val presenter: AdminPresenter,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { userList ->
-                    Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
+                    Log.d(SplashActivity.TAG, "AdminInteractor getStudentsList : ${userList.size}")
                     presenter.studentsFound(userList)
                 }
     }
@@ -33,7 +33,7 @@ class AdminInteractor(private val presenter: AdminPresenter,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { userList ->
-                    Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
+                    Log.d(SplashActivity.TAG, "AdminInteractor getTeachersList : ${userList.size}")
                     presenter.teachersFound(userList)
                 }
     }
@@ -43,7 +43,7 @@ class AdminInteractor(private val presenter: AdminPresenter,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { userList ->
-                    Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
+                    Log.d(SplashActivity.TAG, "AdminInteractor getAdminsList : ${userList.size}")
                     presenter.adminsFound(userList)
                 }
     }

@@ -40,7 +40,7 @@ class CreateTeacherPresenter(private val view: CreateTeacherMVP.View) : CreateTe
         var s = Teacher(degreeS, firstnameS, lastnameS, dateOfBirthS,telS,emailS,
                 genderS,password.hashCode(),dateOfRegisS)
 
-        Log.d(SplashActivity.asd, "Teacher : $s")
+        Log.d(SplashActivity.TAG, "Teacher : $s")
 
         var ss = TeacherEntity(s.id, s.username, s.firstname, s.lastname, s.password,
                 s.dateOfRegistration, s.dateOfBirth, s.telNumber, s.email, s.gender, s.degree)
@@ -49,7 +49,7 @@ class CreateTeacherPresenter(private val view: CreateTeacherMVP.View) : CreateTe
 
 
         view.msg("Saved Successfully!")
-        Log.d(SplashActivity.asd, "Teacher created! $ss")
+        Log.d(SplashActivity.TAG, "Teacher created! $ss")
     }
 
     override fun getDegreeList(): ArrayList<String> {

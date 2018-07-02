@@ -1,7 +1,7 @@
 package kz.batana.intranet_v3.ui.login
 
 import android.util.Log
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.TAG
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
@@ -20,7 +20,7 @@ class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
             is StudentEntity->{
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
-                    Log.d(asd, "Student Presenter")
+                    Log.d(TAG, "Student Presenter")
                     view.msg("Welcome ${user.firstname}!")
                 }else{
                     view.msg("Invalid Password!")
@@ -29,7 +29,7 @@ class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
             is TeacherEntity->{
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
-                    Log.d(asd, "Teacher Presenter")
+                    Log.d(TAG, "Teacher Presenter")
                     view.msg("Welcome ${user.firstname}!")
                 }else{
                     view.msg("Invalid Password!")
@@ -38,7 +38,7 @@ class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
             is AdminEntity->{
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
-                    Log.d(asd, "Admin Presenter")
+                    Log.d(TAG, "Admin Presenter")
                     view.msg("Welcome ${user.firstname}!")
                 }else{
                     view.msg("Invalid Password!")

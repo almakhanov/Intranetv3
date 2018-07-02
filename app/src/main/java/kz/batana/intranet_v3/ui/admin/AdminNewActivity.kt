@@ -12,7 +12,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_admin_new.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.TAG
+import kz.batana.intranet_v3.SplashActivity.Companion.log
 import kz.batana.intranet_v3.SplashActivity.Companion.password
 import kz.batana.intranet_v3.SplashActivity.Companion.username
 import kz.batana.intranet_v3.data.localDB.SharedPreference.LoginPreference.Companion.putLoginPref
@@ -23,6 +24,7 @@ import kz.batana.intranet_v3.ui.admin.AdminPresenter.Companion.ADMIN
 import kz.batana.intranet_v3.ui.admin.AdminPresenter.Companion.STUDENT
 import kz.batana.intranet_v3.ui.admin.AdminPresenter.Companion.TEACHER
 import kz.batana.intranet_v3.ui.admin.student_create.CreateStudentActivity
+import kz.batana.intranet_v3.ui.admin.student_profile.StudentProfileActivity
 import kz.batana.intranet_v3.ui.admin.teacher_create.CreateTeacherActivity
 import kz.batana.intranet_v3.ui.login.LoginActivity
 
@@ -34,19 +36,21 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
 
 
     override fun onHeaderClicked(h: String) {
-        Log.d(asd, h)
+        Log.d(TAG, h)
     }
 
     override fun onStudentClicked(s: StudentEntity) {
-        Log.d(asd, s.toString())
+        log(s.toString())
+        startActivity(Intent(this, StudentProfileActivity::class.java)
+                .putExtra("user", s))
     }
 
     override fun onTeacherClicked(t: TeacherEntity) {
-        Log.d(asd, t.toString())
+        Log.d(TAG, t.toString())
     }
 
     override fun onAdminClicked(a: AdminEntity) {
-        Log.d(asd, a.toString())
+        Log.d(TAG, a.toString())
     }
 
     override fun onAddBtnClicked(b: String) {
@@ -72,7 +76,7 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         setContentView(R.layout.activity_admin_new)
 
         var userObj = intent.getSerializableExtra("user") as AdminEntity
-        Log.d(asd, "getSerializableExtra : $userObj")
+        log("getSerializableExtra : $userObj")
 
         navigationViewAdmin.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -91,9 +95,9 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         setSupportActionBar(toolbarAdmin)
         val actionbar: ActionBar? = supportActionBar
         actionbar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.mipmap.nav48)
-            setTitle("Admin page")
+            this.setDisplayHomeAsUpEnabled(true)
+            this.setHomeAsUpIndicator(R.mipmap.nav32)
+            this.title = "Admin page"
         }
 
     }
@@ -128,7 +132,7 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         RecView?.adapter = adapter
         adapter.notifyDataSetChanged()
 
-        Log.d(asd, "arr list size = ${arrayList.size}")
+        Log.d(TAG, "arr list size = ${arrayList.size}")
     }
 
 }

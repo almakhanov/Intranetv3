@@ -11,7 +11,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_student.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.R.id.*
 import kz.batana.intranet_v3.SplashActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,7 +93,7 @@ class CreateStudentActivity : AppCompatActivity(), CreateStudentMVP.View {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "FacOption: ${facList[p2]}")
+                Log.d(SplashActivity.TAG, "FacOption: ${facList[p2]}")
                 facultyS = facList[p2]
             }
         }
@@ -112,7 +111,7 @@ class CreateStudentActivity : AppCompatActivity(), CreateStudentMVP.View {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "SpecOption: ${specList[p2]}")
+                Log.d(SplashActivity.TAG, "SpecOption: ${specList[p2]}")
                 specS = specList[p2]
             }
         }
@@ -130,7 +129,7 @@ class CreateStudentActivity : AppCompatActivity(), CreateStudentMVP.View {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "YearOfStudyOption: ${yearList[p2]}")
+                Log.d(SplashActivity.TAG, "YearOfStudyOption: ${yearList[p2]}")
                 yearOfStudyS = p2
             }
         }
@@ -147,7 +146,7 @@ class CreateStudentActivity : AppCompatActivity(), CreateStudentMVP.View {
             val simpleDateFormat = SimpleDateFormat(birthFormat, Locale.US)
             studentBirthdayInput.text = simpleDateFormat.format(calendar.time)
 
-            Log.d(SplashActivity.asd, calendar.time.toString())
+            Log.d(SplashActivity.TAG, calendar.time.toString())
             dateOfBirthS = simpleDateFormat.format(calendar.time)
 
             //DATE OF REGISTRATION BY DATE FORMAT

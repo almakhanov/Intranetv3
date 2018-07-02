@@ -11,7 +11,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_teacher.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.R.id.*
 import kz.batana.intranet_v3.SplashActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,7 +86,7 @@ class CreateTeacherActivity : AppCompatActivity(), CreateTeacherMVP.View {
                 if(p2 == 0){
                     //Toast.makeText(activity, "Select other option please!", Toast.LENGTH_SHORT).show()
                 }
-                Log.d(SplashActivity.asd, "SpecOption: ${degreeList[p2]}")
+                Log.d(SplashActivity.TAG, "SpecOption: ${degreeList[p2]}")
                 degreeS = degreeList[p2]
             }
         }
@@ -106,7 +105,7 @@ class CreateTeacherActivity : AppCompatActivity(), CreateTeacherMVP.View {
             val simpleDateFormat = SimpleDateFormat(birthFormat, Locale.US)
             teacherBirthdayInput.text = simpleDateFormat.format(calendar.time)
 
-            Log.d(SplashActivity.asd, calendar.time.toString())
+            Log.d(SplashActivity.TAG, calendar.time.toString())
             dateOfBirthS = simpleDateFormat.format(calendar.time)
 
             //DATE OF REGISTRATION BY DATE FORMAT

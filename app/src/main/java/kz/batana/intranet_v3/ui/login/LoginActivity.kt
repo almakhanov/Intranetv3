@@ -3,11 +3,10 @@ package kz.batana.intranet_v3.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.log
 import kz.batana.intranet_v3.SplashActivity.Companion.password
 import kz.batana.intranet_v3.SplashActivity.Companion.username
 import kz.batana.intranet_v3.data.localDB.SharedPreference.LoginPreference.Companion.putLoginPref
@@ -25,7 +24,7 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
         setContentView(R.layout.activity_login)
 
 
-        Log.d(asd, "LoginActivity is opened")
+        log("LoginActivity is opened")
 
         presenter.login(username, password)
 
@@ -61,15 +60,15 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
     override fun openActivity(user: Any) {
         when(user){
             is StudentEntity -> {
-                Log.d(asd, "Starting StudentActivity...")
+                log("Starting StudentActivity...")
                 msg("No student activity")
             }
             is TeacherEntity -> {
-                Log.d(asd, "Starting TeacherActivity...")
+                log("Starting TeacherActivity...")
                 msg("No teacher activity")
             }
             is AdminEntity -> {
-                Log.d(asd, "Starting AdminNewActivity...")
+                log("Starting AdminNewActivity...")
                 startActivity(Intent(this, AdminNewActivity::class.java)
                         .putExtra("user", user))
                 finish()

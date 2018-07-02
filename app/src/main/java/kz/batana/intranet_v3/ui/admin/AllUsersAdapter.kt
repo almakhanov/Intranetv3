@@ -1,7 +1,6 @@
 package kz.batana.intranet_v3.ui.admin
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import kotlinx.android.synthetic.main.item_all_users_adapter_header.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_students.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_teachers.view.*
 import kz.batana.intranet_v3.R
-import kz.batana.intranet_v3.SplashActivity.Companion.asd
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
@@ -40,7 +38,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = run {
-        Log.d(asd,"AllUsersAdapter Opened")
+        //Log.d(TAG,"AllUsersAdapter Opened")
         when(viewType){
             HolderTypes.STUDENTS -> StudentListViewHolder(LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_all_users_adapter_students, parent, false))
@@ -70,7 +68,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
         when(holder){
             is StudentListViewHolder ->{
                 val obj = dataset[position] as StudentEntity
-                Log.d(asd, "==> $obj")
+                //Log.d(TAG, "==> $obj")
                 holder.itemView.studentFirstNameCardViewTextView.text = obj.firstname
                 holder.itemView.studentLastNameCardViewTextView.text = obj.lastname
                 holder.itemView.setOnClickListener{
@@ -79,7 +77,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
             }
             is TeacherListViewHolder ->{
                 val obj = dataset[position] as TeacherEntity
-                Log.d(asd, "==> $obj")
+                //Log.d(TAG, "==> $obj")
                 holder.itemView.teacherFirstNameCardViewTextView.text = obj.firstname
                 holder.itemView.teacherLastNameCardViewTextView.text = obj.lastname
                 holder.itemView.setOnClickListener{
@@ -88,7 +86,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
             }
             is AdminListViewHolder ->{
                 val obj = dataset[position] as AdminEntity
-                Log.d(asd, "==> $obj")
+                //Log.d(TAG, "==> $obj")
                 holder.itemView.adminFirstNameCardViewTextView.text = obj.firstname
                 holder.itemView.adminLastNameCardViewTextView.text = obj.lastname
                 holder.itemView.setOnClickListener{
@@ -97,7 +95,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
             }
             is HeaderViewHolder ->{
                 val obj = dataset[position] as String
-                Log.d(asd, "==> $obj")
+                //Log.d(TAG, "==> $obj")
                 holder.itemView.headerCardViewTextView.text = obj
                 holder.itemView.setOnClickListener{
                     listener.onHeaderClicked(obj)
