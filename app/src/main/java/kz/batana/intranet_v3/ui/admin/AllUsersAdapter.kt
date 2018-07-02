@@ -14,9 +14,17 @@ import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
-class AllUsersAdapter(private val dataset: ArrayList<Any>,
+class AllUsersAdapter(private var dataset: ArrayList<Any>,
                       private val listener: OnItemClickListener)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+    private var usersQuery = UsersQueryFilter(dataset)
+
+    open fun filter(query: String){
+        dataset = usersQuery.findByFilter(query)
+        notifyDataSetChanged()
+    }
+
 
     override fun getItemViewType(position: Int): Int = when(dataset[position]){
         is StudentEntity -> HolderTypes.STUDENTS
@@ -124,5 +132,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
         fun onAdminClicked(a: AdminEntity)
         fun onAddBtnClicked(b: String)
     }
+
+
 }
 

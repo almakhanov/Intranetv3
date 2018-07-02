@@ -6,8 +6,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_admin_new.*
@@ -103,6 +106,33 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
     }
 
 
+    private var searchView: SearchView?=null
+    private var autoCompleteTextView:AutoCompleteTextView?=null
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_admin_users,menu)
+        val searchItem = menu?.findItem(R.id.actionSearch)
+        searchView = searchItem?.actionView as SearchView
+        searchView?.queryHint = "Search"
+        autoCompleteTextView = searchView?.findViewById(android.support.v7.appcompat.R.id.search_src_text) as AutoCompleteTextView
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    //filter by car model title
+                    adapter.filter(newText)
+                }
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -121,14 +151,14 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
         presenter.getObjects()
     }
 
-
+    lateinit var adapter : AllUsersAdapter
     override fun updateList(objects: ArrayList<Any>) {
 
         for (it in objects) arrayList.add(it)
 
         var layout = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         RecView?.layoutManager = layout
-        var adapter = AllUsersAdapter(arrayList, this)
+        adapter = AllUsersAdapter(arrayList, this)
         RecView?.adapter = adapter
         adapter.notifyDataSetChanged()
 
