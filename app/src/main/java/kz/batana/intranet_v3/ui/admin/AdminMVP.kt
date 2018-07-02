@@ -7,7 +7,7 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 interface AdminMVP{
     interface View{
         fun updateList(objects: ArrayList<Any>)
-
+        fun msg(s: String)
     }
 
     interface Presenter{

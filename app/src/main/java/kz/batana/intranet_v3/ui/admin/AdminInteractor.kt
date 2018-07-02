@@ -11,44 +11,38 @@ import kz.batana.intranet_v3.data.localDB.database.student_room.StudentDB
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherDB
 
 class AdminInteractor(private val presenter: AdminPresenter,
-                      private val ctx : Context) : AdminMVP.Interactor {
+                      ctx : Context) : AdminMVP.Interactor {
 
-    private var adminDB: AdminDB
-    private var studentDB : StudentDB
-    private var teacherDB : TeacherDB
+    private var adminDB: AdminDB = Room.databaseBuilder(ctx, AdminDB::class.java, "admin").build()
+    private var studentDB : StudentDB = Room.databaseBuilder(ctx, StudentDB::class.java, "student").build()
+    private var teacherDB : TeacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
 
-    init{
-        //Create DB
-        adminDB = Room.databaseBuilder(ctx, AdminDB::class.java, "admin").build()
-        studentDB = Room.databaseBuilder(ctx, StudentDB::class.java, "student").build()
-        teacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
-    }
 
     override fun getStudentsList(){
-        studentDB?.studentDao().getAllStudents()
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { userList ->
+        studentDB.studentDao().getAllStudents()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { userList ->
                     Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
                     presenter.studentsFound(userList)
                 }
     }
 
     override fun getTeachersList(){
-        teacherDB?.teacherDao().getAllTeacher()
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { userList ->
+        teacherDB.teacherDao().getAllTeacher()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { userList ->
                     Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
                     presenter.teachersFound(userList)
                 }
     }
 
     override fun getAdminsList(){
-        adminDB?.adminDao().getAllAdmins()
-        ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { userList ->
+        adminDB.adminDao().getAllAdmins()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { userList ->
                     Log.d(SplashActivity.asd, "AdminInteractor admin : $userList")
                     presenter.adminsFound(userList)
                 }

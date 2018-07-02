@@ -9,19 +9,14 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherDB
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class CreateTeacherInteractor(private val presenter: CreateTeacherPresenter,
-                              private val ctx: Context) : CreateTeacherMVP.Interactor {
+                              ctx: Context) : CreateTeacherMVP.Interactor {
 
 
-    private var teacherDB : TeacherDB
-
-    init{
-        //Create DB
-        teacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "student").build()
-    }
+    private var teacherDB : TeacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
 
     override fun saveTeacherEntity(ss: TeacherEntity) {
         Single.fromCallable {
-            teacherDB?.teacherDao()?.insertTeacher(ss)
+            teacherDB.teacherDao().insertTeacher(ss)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }

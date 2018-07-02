@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import kotlinx.android.synthetic.main.item_all_users_adapter_admins.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_header.view.*
 import kotlinx.android.synthetic.main.item_all_users_adapter_students.view.*
@@ -23,6 +24,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
         is StudentEntity -> HolderTypes.STUDENTS
         is TeacherEntity -> HolderTypes.TEACHERS
         is AdminEntity -> HolderTypes.ADMINS
+        is Button -> HolderTypes.BUTTON
         else -> {
             HolderTypes.HEADER
         }
@@ -33,6 +35,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
         const val TEACHERS = 1
         const val ADMINS = 2
         const val HEADER = 3
+        const val BUTTON = 4
     }
 
 
@@ -47,6 +50,9 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
 
             HolderTypes.ADMINS -> AdminListViewHolder(LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_all_users_adapter_admins, parent, false))
+
+            HolderTypes.BUTTON -> ButtonViewHolder(LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_all_users_adapter_add_btn, parent, false))
 
             else->{
                 HeaderViewHolder(LayoutInflater.from(parent.context)
@@ -97,6 +103,12 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
                     listener.onHeaderClicked(obj)
                 }
             }
+            is ButtonViewHolder ->{
+                val obj = dataset[position] as Button
+                holder.itemView.setOnClickListener{
+                    listener.onAddBtnClicked(obj.hint.toString())
+                }
+            }
         }
     }
 
@@ -104,6 +116,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
     inner class TeacherListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     inner class AdminListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ButtonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
     interface OnItemClickListener{
@@ -111,13 +124,7 @@ class AllUsersAdapter(private val dataset: ArrayList<Any>,
         fun onStudentClicked(s: StudentEntity)
         fun onTeacherClicked(t: TeacherEntity)
         fun onAdminClicked(a: AdminEntity)
+        fun onAddBtnClicked(b: String)
     }
 }
 
-
-
-
-const val HEADER = "HEADER"
-const val STUDENTS = "STUDENTS"
-const val TEACHERS =  "TEACHERS"
-const val ADMINS = "ADMINS"

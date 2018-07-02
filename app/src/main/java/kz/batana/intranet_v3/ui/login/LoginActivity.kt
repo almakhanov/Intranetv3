@@ -8,6 +8,9 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.SplashActivity.Companion.asd
+import kz.batana.intranet_v3.SplashActivity.Companion.password
+import kz.batana.intranet_v3.SplashActivity.Companion.username
+import kz.batana.intranet_v3.data.localDB.SharedPreference.LoginPreference.Companion.putLoginPref
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
@@ -17,14 +20,15 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
 
     private val presenter : LoginPresenter by lazy{LoginPresenter(this)}
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
 
         Log.d(asd, "LoginActivity is opened")
+
+        presenter.login(username, password)
+
     }
 
 
@@ -42,6 +46,7 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
         loginBtn.setOnClickListener{
             var username = editTextUsernameLogin.text.toString()
             var password = editTextPasswordLogin.text.toString()
+            putLoginPref(username, password)
             presenter.login(username, password)
         }
 
@@ -67,6 +72,7 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
                 Log.d(asd, "Starting AdminNewActivity...")
                 startActivity(Intent(this, AdminNewActivity::class.java)
                         .putExtra("user", user))
+                finish()
             }
         }
     }

@@ -66,8 +66,7 @@ class CreateStudentPresenter(private val view: CreateStudentMVP.View) : CreateSt
     }
 
     override fun getYearList(): ArrayList<String> {
-        return arrayListOf("Select your Specialization","Information Systems", "Computer Systems and Software", "Automation and Control", "Management",
-                "Finance","Project Management", "Economics", "Petroleum Engineering", "Geology")
+        return arrayListOf("Select your year of Study","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
     }
 
 }

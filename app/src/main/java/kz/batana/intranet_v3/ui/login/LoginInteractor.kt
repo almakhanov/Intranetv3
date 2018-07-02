@@ -12,39 +12,32 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherDB
 
 class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) : LoginMVP.Interactor {
 
-    private var adminDB: AdminDB
-    private var studentDB : StudentDB
-    private var teacherDB : TeacherDB
-
-    init{
-        //Create DB
-        adminDB = Room.databaseBuilder(ctx, AdminDB::class.java, "admin").build()
-        studentDB = Room.databaseBuilder(ctx, StudentDB::class.java, "student").build()
-        teacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
-    }
+    private var adminDB: AdminDB = Room.databaseBuilder(ctx, AdminDB::class.java, "admin").build()
+    private var studentDB : StudentDB = Room.databaseBuilder(ctx, StudentDB::class.java, "student").build()
+    private var teacherDB : TeacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
 
 
     override fun getUser(username: String){
-        adminDB?.adminDao()?.getAdmin(username)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { user ->
+        adminDB.adminDao().getAdmin(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { user ->
                     Log.d(asd, "LoginInteractor admin obj : $user")
                     presenter.userFound(user)
                 }
 
-        studentDB?.studentDao()?.getStudent(username)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { user ->
+        studentDB.studentDao().getStudent(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { user ->
                     Log.d(asd, "LoginInteractor student obj : $user")
                     presenter.userFound(user)
                 }
 
-        teacherDB?.teacherDao()?.getTeacher(username)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { user ->
+        teacherDB.teacherDao().getTeacher(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { user ->
                     Log.d(asd, "LoginInteractor teacher obj : $user")
                     presenter.userFound(user)
                 }
