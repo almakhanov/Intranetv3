@@ -14,6 +14,9 @@ interface StudentDao{
     @Query("SELECT * FROM student WHERE username = :username_")
     fun getStudent(username_: String) : Flowable<StudentEntity>
 
+    @Query("UPDATE student set password = :password_ WHERE id = :id_")
+    fun updatePasswordStudent(password_: Int, id_: String)
+
     @Insert
     fun insertStudent(studentEntity: StudentEntity)
 

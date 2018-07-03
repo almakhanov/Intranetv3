@@ -4,23 +4,27 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.ActionBar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_student_profile.*
+import kotlinx.android.synthetic.main.dialog_new_password.view.*
 import kz.batana.intranet_v3.R
 import kz.batana.intranet_v3.SplashActivity.Companion.log
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 
 
+class StudentProfileActivity : AppCompatActivity(), StudentProfileMVP.View {
 
-class StudentProfileActivity : AppCompatActivity() {
-
+    private val presenter : StudentProfilePresenter by lazy{ StudentProfilePresenter(this) }
+    private lateinit var userObj: StudentEntity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile)
 
-        var userObj = intent.getSerializableExtra("user") as StudentEntity
+        userObj = intent.getSerializableExtra("user") as StudentEntity
         log("getSerializableExtra -> StudentEntity : $userObj")
 
         setData(userObj)
@@ -33,6 +37,9 @@ class StudentProfileActivity : AppCompatActivity() {
             this.setDisplayHomeAsUpEnabled(true)
             this.setHomeAsUpIndicator(R.mipmap.back32)
         }
+
+
+
 
     }
 
@@ -52,6 +59,10 @@ class StudentProfileActivity : AppCompatActivity() {
         return true
     }
 
+     override fun msg(s: String){
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
@@ -62,7 +73,20 @@ class StudentProfileActivity : AppCompatActivity() {
                 log("delete")
             }
             R.id.itemStudentProfileNewPassword->{
-                log("new password")
+                //NEW PASSWORD DIALOG
+                val newPassDialog = AlertDialog.Builder(this)
+                val newPassDialogView = layoutInflater.inflate(R.layout.dialog_new_password, null)
+                newPassDialog.setView(newPassDialogView)
+                newPassDialog.setPositiveButton("Save"){dialog_, which_->
+                    presenter.check(newPassDialogView.dialogNewPassword1Input.text.toString(),
+                            newPassDialogView.dialogNewPassword2Input.text.toString(), "student", userObj.id)
+                }
+                newPassDialog.setNegativeButton("Cancel"){dialog_, which_->
+                    Toast.makeText(applicationContext, "Canceled!", Toast.LENGTH_SHORT).show()
+                }
+
+                val dialog: AlertDialog = newPassDialog.create()
+                dialog.show()
             }
         }
         return super.onOptionsItemSelected(item)
