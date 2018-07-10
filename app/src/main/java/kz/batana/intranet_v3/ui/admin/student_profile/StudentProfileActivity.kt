@@ -59,8 +59,8 @@ class StudentProfileActivity : AppCompatActivity(), StudentProfileMVP.View {
         return true
     }
 
-     override fun msg(s: String){
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+     override fun message(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 

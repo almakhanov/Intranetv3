@@ -7,14 +7,14 @@ class StudentProfilePresenter(private val view: StudentProfileMVP.View) : Studen
 
     override fun check(password1: String, password2: String, type: String, id: String) {
         if(password1.isEmpty() || password2.isEmpty()){
-            view.msg("Please fill both input lines!")
+            view.message("Please fill both input lines!")
         }else if(!password1.equals(password2)){
-            view.msg("Fields do not match")
+            view.message("Fields do not match")
         }else{
             when(type){
                 "student"->{
                     interactor.newPasswordStudent(password1.hashCode(), id)
-                    view.msg("New Password saved successfully!")
+                    view.message("New Password saved successfully!")
                 }
                 "teacher"->{
 

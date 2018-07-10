@@ -62,19 +62,19 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
     }
 
 
-    override fun msg(str: String) {
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
+    override fun message(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun openActivity(user: Any) {
         when(user){
             is StudentEntity -> {
                 log("Starting StudentActivity...")
-                msg("No student activity")
+                message("No student activity")
             }
             is TeacherEntity -> {
                 log("Starting TeacherActivity...")
-                msg("No teacher activity")
+                message("No teacher activity")
             }
             is AdminEntity -> {
                 log("Starting AdminNewActivity...")

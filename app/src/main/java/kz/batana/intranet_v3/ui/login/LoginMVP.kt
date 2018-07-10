@@ -3,7 +3,7 @@ package kz.batana.intranet_v3.ui.login
 interface LoginMVP {
 
     interface View{
-        fun msg(str: String)
+        fun message(message: String)
         fun openActivity(user: Any)
     }
 

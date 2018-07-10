@@ -5,7 +5,7 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 interface CreateTeacherMVP {
 
     interface View{
-        fun msg(s: String)
+        fun message(message: String)
     }
 
     interface Presenter{
@@ -17,6 +17,6 @@ interface CreateTeacherMVP {
     }
 
     interface Interactor {
-        fun saveTeacherEntity(ss: TeacherEntity)
+        fun saveTeacherEntity(teacherEntity: TeacherEntity)
     }
 }

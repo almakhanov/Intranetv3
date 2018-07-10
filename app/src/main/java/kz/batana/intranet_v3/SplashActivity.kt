@@ -15,8 +15,8 @@ class SplashActivity : AppCompatActivity() {
         lateinit var username : String
         lateinit var password : String
 
-        fun log(msg: String){
-            Log.d(TAG, msg)
+        fun log(message: String){
+            Log.d(TAG, message)
         }
     }
 

@@ -12,23 +12,23 @@ class CreateTeacherPresenter(private val view: CreateTeacherMVP.View) : CreateTe
     override fun validated(firstname: String, lastname: String, tel: String, email: String, dateOfBirth: String): Boolean {
         when {
             firstname.isEmpty() -> {
-                view.msg("First Name is empty!")
+                view.message("First Name is empty!")
                 return false
             }
             lastname.isEmpty() -> {
-                view.msg("Last Name is empty!")
+                view.message("Last Name is empty!")
                 return false
             }
             tel.isEmpty() -> {
-                view.msg("Telephone Number is empty!")
+                view.message("Telephone Number is empty!")
                 return false
             }
             email.isEmpty() -> {
-                view.msg("Email is empty!")
+                view.message("Email is empty!")
                 return false
             }
             dateOfBirth.equals("Date of Birth") -> {
-                view.msg("Date of Birth is empty!")
+                view.message("Date of Birth is empty!")
                 return false
             }
             else -> return true
@@ -48,7 +48,7 @@ class CreateTeacherPresenter(private val view: CreateTeacherMVP.View) : CreateTe
         interactor.saveTeacherEntity(ss)
 
 
-        view.msg("Saved Successfully!")
+        view.message("Saved Successfully!")
         Log.d(SplashActivity.TAG, "Teacher created! $ss")
     }
 

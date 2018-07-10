@@ -21,31 +21,31 @@ class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
                     Log.d(TAG, "Student Presenter")
-                    view.msg("Welcome ${user.firstname}!")
+                    view.message("Welcome ${user.firstname}!")
                 }else{
-                    view.msg("Invalid Password!")
+                    view.message("Invalid Password!")
                 }
             }
             is TeacherEntity->{
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
                     Log.d(TAG, "Teacher Presenter")
-                    view.msg("Welcome ${user.firstname}!")
+                    view.message("Welcome ${user.firstname}!")
                 }else{
-                    view.msg("Invalid Password!")
+                    view.message("Invalid Password!")
                 }
             }
             is AdminEntity->{
                 if(user.password.equals(pass.hashCode())){
                     view.openActivity(user)
                     Log.d(TAG, "Admin Presenter")
-                    view.msg("Welcome ${user.firstname}!")
+                    view.message("Welcome ${user.firstname}!")
                 }else{
-                    view.msg("Invalid Password!")
+                    view.message("Invalid Password!")
                 }
             }
             else->{
-                view.msg("ERROR in LoginPresenter!")
+                view.message("ERROR in LoginPresenter!")
             }
         }
     }
@@ -55,7 +55,7 @@ class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
         userN = username
         pass = password
         if(username.isEmpty() || password.isEmpty()){
-            view.msg("Empty username or password!")
+            view.message("Empty username or password!")
         }else{
             interactor.getUser(username)
         }

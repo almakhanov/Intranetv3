@@ -64,13 +64,13 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
                 startActivity(Intent(this, CreateTeacherActivity::class.java))
             }
             ADMIN -> {
-                msg("No admin create activity yet!")
+                message("No admin create activity yet!")
             }
         }
     }
 
-    override fun msg(s: String) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+    override fun message(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

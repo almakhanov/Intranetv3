@@ -8,9 +8,9 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class CreateTeacherInteractor(private val presenter: CreateTeacherPresenter) : CreateTeacherMVP.Interactor {
 
-    override fun saveTeacherEntity(ss: TeacherEntity) {
+    override fun saveTeacherEntity(teacherEntity: TeacherEntity) {
         Single.fromCallable {
-            appDatabase.teacherDao().insertTeacher(ss)
+            appDatabase.teacherDao().insertTeacher(teacherEntity)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }

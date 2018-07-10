@@ -4,7 +4,7 @@ import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 
 interface CreateStudentMVP {
     interface View{
-        fun msg(s: String)
+        fun message(message: String)
 
     }
 
