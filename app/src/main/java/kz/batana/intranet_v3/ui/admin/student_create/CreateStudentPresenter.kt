@@ -7,7 +7,7 @@ import kz.batana.intranet_v3.data.localDB.models.Student
 
 class CreateStudentPresenter(private val view: CreateStudentMVP.View) : CreateStudentMVP.Presenter {
 
-    private val interactor = CreateStudentInteractor(this, view as CreateStudentActivity)
+    private val interactor = CreateStudentInteractor(this)
 
     override fun validated(firstname: String, lastname: String, tel: String, email: String, dateOfBirth: String): Boolean {
         when {

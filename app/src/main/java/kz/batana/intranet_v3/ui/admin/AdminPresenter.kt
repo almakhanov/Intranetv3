@@ -8,7 +8,7 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class AdminPresenter(private val view : AdminMVP.View) : AdminMVP.Presenter {
 
-    private val interactor = AdminInteractor(this, view as AdminNewActivity)
+    private val interactor = AdminInteractor(this)
 
     companion object {
         const val STUDENT = "student"

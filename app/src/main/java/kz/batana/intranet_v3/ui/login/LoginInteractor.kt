@@ -1,24 +1,15 @@
 package kz.batana.intranet_v3.ui.login
 
-import android.arch.persistence.room.Room
-import android.content.Context
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kz.batana.intranet_v3.SplashActivity.Companion.TAG
-import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminDB
-import kz.batana.intranet_v3.data.localDB.database.student_room.StudentDB
-import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherDB
+import kz.batana.intranet_v3.SuperPooperMegaCoolApp.Companion.appDatabase
 
-class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) : LoginMVP.Interactor {
-
-    private var adminDB: AdminDB = Room.databaseBuilder(ctx, AdminDB::class.java, "admin").build()
-    private var studentDB : StudentDB = Room.databaseBuilder(ctx, StudentDB::class.java, "student").build()
-    private var teacherDB : TeacherDB = Room.databaseBuilder(ctx, TeacherDB::class.java, "teacher").build()
-
+class LoginInteractor(private val presenter: LoginMVP.Presenter) : LoginMVP.Interactor {
 
     override fun getUser(username: String){
-        adminDB.adminDao().getAdmin(username)
+        appDatabase.adminDao().getAdmin(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->
@@ -26,7 +17,7 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
                     presenter.userFound(user)
                 }
 
-        studentDB.studentDao().getStudent(username)
+        appDatabase.studentDao().getStudent(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->
@@ -34,7 +25,7 @@ class LoginInteractor(private val presenter: LoginMVP.Presenter, ctx: Context) :
                     presenter.userFound(user)
                 }
 
-        teacherDB.teacherDao().getTeacher(username)
+        appDatabase.teacherDao().getTeacher(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { user ->

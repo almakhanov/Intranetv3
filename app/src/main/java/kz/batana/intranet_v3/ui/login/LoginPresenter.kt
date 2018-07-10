@@ -8,7 +8,7 @@ import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
 class LoginPresenter(private val view: LoginMVP.View) : LoginMVP.Presenter {
 
-    private val interactor = LoginInteractor(this, view as LoginActivity)
+    private val interactor = LoginInteractor(this)
 
     private var pass : String = ""
     private var userN : String = ""

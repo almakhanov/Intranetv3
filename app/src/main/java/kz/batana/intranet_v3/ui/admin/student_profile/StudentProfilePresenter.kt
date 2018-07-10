@@ -2,7 +2,7 @@ package kz.batana.intranet_v3.ui.admin.student_profile
 
 class StudentProfilePresenter(private val view: StudentProfileMVP.View) : StudentProfileMVP.Presenter {
 
-    private val interactor = StudentProfileInteractor(this, view as StudentProfileActivity)
+    private val interactor = StudentProfileInteractor(this)
 
 
     override fun check(password1: String, password2: String, type: String, id: String) {
