@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
 
         log("LoginActivity is opened")
 
-        createAdmin()
+        //createAdmin()
 
 
         presenter.login(username, password)
