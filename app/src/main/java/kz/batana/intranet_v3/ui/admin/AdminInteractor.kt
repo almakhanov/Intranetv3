@@ -1,44 +1,29 @@
 package kz.batana.intranet_v3.ui.admin
 
-import android.util.Log
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kz.batana.intranet_v3.SplashActivity
 import kz.batana.intranet_v3.SplashActivity.Companion.log
 import kz.batana.intranet_v3.SuperPooperMegaCoolApp.Companion.appDatabase
+import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
+import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.suggestions_room.SuggestionsEntity
+import kz.batana.intranet_v3.data.localDB.database.teacher_room.TeacherEntity
 
-class AdminInteractor(private val presenter: AdminPresenter) : AdminMVP.Interactor {
 
-    override fun getStudentsList(){
-        appDatabase.studentDao().getAllStudents()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { userList ->
-                    Log.d(SplashActivity.TAG, "AdminInteractor getStudentsList : ${userList.size}")
-                    presenter.studentsFound(userList)
-                }
+class AdminInteractor(private val presenter: AdminPresenter) : AdminMVP.Interactor{
+
+    override fun getStudentsList(): Flowable<List<StudentEntity>> {
+        return appDatabase.studentDao().getAllStudents()
     }
 
-    override fun getTeachersList(){
-        appDatabase.teacherDao().getAllTeacher()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { userList ->
-                    Log.d(SplashActivity.TAG, "AdminInteractor getTeachersList : ${userList.size}")
-                    presenter.teachersFound(userList)
-                }
+    override fun getTeachersList(): Flowable<List<TeacherEntity>> {
+        return appDatabase.teacherDao().getAllTeacher()
     }
 
-    override fun getAdminsList(){
-        appDatabase.adminDao().getAllAdmins()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { userList ->
-                    Log.d(SplashActivity.TAG, "AdminInteractor getAdminsList : ${userList.size}")
-                    presenter.adminsFound(userList)
-                }
+    override fun getAdminsList(): Flowable<List<AdminEntity>> {
+        return appDatabase.adminDao().getAllAdmins()
     }
 
     override fun saveSuggestion(query: SuggestionsEntity) {

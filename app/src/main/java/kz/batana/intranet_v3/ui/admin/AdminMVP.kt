@@ -1,5 +1,6 @@
 package kz.batana.intranet_v3.ui.admin
 
+import io.reactivex.Flowable
 import kz.batana.intranet_v3.data.localDB.database.admin_room.AdminEntity
 import kz.batana.intranet_v3.data.localDB.database.student_room.StudentEntity
 import kz.batana.intranet_v3.data.localDB.database.suggestions_room.SuggestionsEntity
@@ -14,18 +15,15 @@ interface AdminMVP{
 
     interface Presenter{
         fun getObjects()
-        fun studentsFound(userList: List<StudentEntity>)
-        fun teachersFound(userList: List<TeacherEntity>)
-        fun adminsFound(userList: List<AdminEntity>)
         fun saveSuggestion(query: String)
         fun getSuggestions()
         fun suggestionsFound(sgs: List<SuggestionsEntity>)
     }
 
     interface Interactor {
-        fun getStudentsList()
-        fun getTeachersList()
-        fun getAdminsList()
+        fun getStudentsList(): Flowable<List<StudentEntity>>
+        fun getTeachersList(): Flowable<List<TeacherEntity>>
+        fun getAdminsList(): Flowable<List<AdminEntity>>
         fun saveSuggestion(query: SuggestionsEntity)
         fun getSuggestions()
     }

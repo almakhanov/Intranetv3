@@ -174,7 +174,7 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
     lateinit var adapter : AllUsersAdapter
     override fun updateList(objects: ArrayList<Any>) {
 
-        for (it in objects) arrayList.add(it)
+        arrayList.addAll(objects)
 
         var layout = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         RecView?.layoutManager = layout
