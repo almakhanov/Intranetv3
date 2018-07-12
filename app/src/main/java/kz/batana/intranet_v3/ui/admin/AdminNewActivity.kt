@@ -173,15 +173,37 @@ class AdminNewActivity : AppCompatActivity(), AllUsersAdapter.OnItemClickListene
 
     lateinit var adapter : AllUsersAdapter
     override fun updateList(objects: ArrayList<Any>) {
+        if(!objects.isEmpty()){
+            when(objects[0]){
+                is StudentEntity -> {
+                    arrayList.add("Students")
+                    arrayList.addAll(objects)
+                    var btn = Button(this)
+                    btn.hint = STUDENT
+                    arrayList.add(btn)
 
-        arrayList.addAll(objects)
-
-        var layout = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        RecView?.layoutManager = layout
-        adapter = AllUsersAdapter(arrayList, this)
-        RecView?.adapter = adapter
-        adapter.notifyDataSetChanged()
-
+                }
+                is TeacherEntity -> {
+                    arrayList.add("Teachers")
+                    arrayList.addAll(objects)
+                    var btn = Button(this)
+                    btn.hint = TEACHER
+                    arrayList.add(btn)
+                }
+                is AdminEntity -> {
+                    arrayList.add("Admins")
+                    arrayList.addAll(objects)
+                    var btn = Button(this)
+                    btn.hint = ADMIN
+                    arrayList.add(btn)
+                }
+            }
+            var layout = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+            RecView?.layoutManager = layout
+            adapter = AllUsersAdapter(arrayList, this)
+            RecView?.adapter = adapter
+            adapter.notifyDataSetChanged()
+        }
         Log.d(TAG, "arr list size = ${arrayList.size}")
     }
 
